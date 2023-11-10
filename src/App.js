@@ -1,21 +1,28 @@
 import { useState } from "react";
 import { MessageContainer } from "./message.js";
+import Modal from "./modal";
 
-function fetchMessage() {
-    return new Promise((resolve) => setTimeout(resolve, 1000, "⚛️"));
-}
+
 
 export default function App() {
-    const [messagePromise, setMessagePromise] = useState(null);
-    const [show, setShow] = useState(false);
-    function download() {
-        setMessagePromise(fetchMessage());
-        setShow(true);
-    }
+    const [showPopup, setShowPopup] = useState(false);
 
-    if (show) {
-        return <MessageContainer messagePromise={messagePromise} />;
-    } else {
-        return <button onClick={download}>Download message</button>;
-    }
+    return (
+        <div className="position-relative d-inline-block">
+            <div
+                onMouseEnter={() => {
+                    setShowPopup(true);
+                }}
+                onMouseLeave={() => {
+                    setShowPopup(false);
+                }}
+            >
+                HOVER OVER ME TO START REST DOWNLOAD, HOVER OFF TO END REST DOWNLOAD EARLY
+            </div>
+            {showPopup && <Modal />}
+        </div>
+    )
+
 }
+
+
