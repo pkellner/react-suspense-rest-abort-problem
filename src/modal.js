@@ -4,7 +4,7 @@ async function fetchMessage(signal = null) {
     // const response =  fetch("https://hub.dummyapis.com/delay?seconds=2", { signal });
     // return await response.text();
     try {
-        const url = "http://localhost:3100/api/slow"
+        const url = "http://localhost:3100/api/slow?delay=1000"
         const response = await fetch(url, { signal });
         console.log("fetchMessage: response:", response);
 
