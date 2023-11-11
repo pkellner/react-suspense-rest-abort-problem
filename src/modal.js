@@ -1,48 +1,19 @@
-import { Suspense, use, useEffect, useRef, useState } from "react";
-
-
+import { Suspense, use, useState } from "react";
 
 export default function Modal() {
-  const [messagePromise, setMessagePromise] = useState(null);
-
-  const abortControllerRef = useRef(null);
-
-  useEffect(() => {
-    console.log(
-      "Modal: useEffect: abortControllerRef.current:",
-      abortControllerRef.current,
-    );
-    if (!abortControllerRef.current) {
-      abortControllerRef.current = new AbortController();
-      const { signal } = abortControllerRef.current;
-      setMessagePromise(() => fetchMessage(signal));
-    }
-    return () => {
-      console.log(
-        "Modal:cleanup: useEffect: abortControllerRef.current:",
-        abortControllerRef.current,
-      );
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-  }, []);
+  const messagePromise = fetchMessage();
 
   return (
-    <>
-      {messagePromise && (
-        <Suspense fallback={<p>⌛Downloading message...</p>}>
-          <ShowMessage messagePromise={messagePromise} />
-        </Suspense>
-      )}
-    </>
+    <Suspense fallback={<p>⌛Downloading message...</p>}>
+      <ShowMessage messagePromise={messagePromise} />
+    </Suspense>
   );
 }
 
-async function fetchMessage(signal = null) {
+async function fetchMessage() {
   try {
     const url = "http://localhost:3100/api/slow?delay=2000";
-    const response = await fetch(url, { signal });
+    const response = await fetch(url);
     console.log("fetchMessage: response:", response);
 
     if (!response.ok) {
