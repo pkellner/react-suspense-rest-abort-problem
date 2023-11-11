@@ -5,7 +5,6 @@ import Modal from "./modal";
 
 export default function App() {
     const [showPopup, setShowPopup] = useState(false);
-
     return (
         <div className="position-relative d-inline-block">
             <div
@@ -23,7 +22,6 @@ export default function App() {
             {showPopup && <Modal />}
         </div>
     )
-
 }
 
 
