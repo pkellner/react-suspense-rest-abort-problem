@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { MessageContainer } from "./message.js";
 import Modal from "./modal";
 
 
@@ -11,9 +10,11 @@ export default function App() {
         <div className="position-relative d-inline-block">
             <div
                 onMouseEnter={() => {
+                    console.log("onMouseEnter");
                     setShowPopup(true);
                 }}
                 onMouseLeave={() => {
+                    console.log("onMouseLeave");
                     setShowPopup(false);
                 }}
             >
